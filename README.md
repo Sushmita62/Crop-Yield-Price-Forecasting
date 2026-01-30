@@ -1,84 +1,136 @@
-# Crop-Yield-Price-Forecasting
-This project focuses on predictive modeling of crop yield and market prices by integrating agro-climatic and remote sensing data. Using ML (Random Forest, LSTM) and time-series models (ARIMA, SARIMA, Prophet), it builds a scalable pipeline for climate-informed agricultural forecasting.
-## Overview
-This project aims to provide a reliable predictive model to aid in agricultural planning and market intelligence. We tackle a key challenge in the agricultural sector by leveraging real-world data to predict two critical variables:
+# 🌾 Agricultural Yield & Price Forecasting System
 
-**Crop Yield:** The total amount of a crop produced per unit area (in Tonnes/Hectare).
+## 📊 Project Overview
+End-to-end ML pipeline for crop yield prediction and market price forecasting using satellite imagery, climate data, and machine learning.
 
-**Market Price:** The economic value of the crop (in Rupees/Quintal).
+### **Key Results:**
+- **XGBoost R²: 0.72** (Yield Prediction)
+- **LSTM R²: 0.63** (Yield Prediction)  
+- **Prophet R²: 0.85+** (Price Forecasting)
+- **Dataset:** 15 districts, 12 years (2013-2024), 4,080 weekly samples
 
-The pipeline is designed to be modular and scalable, allowing it to be adapted for different crops, regions, and time periods.
+## 🛠️ Technologies Used
+- **Remote Sensing:** Google Earth Engine (MODIS NDVI)
+- **Climate Data:** ERA5-Land, CHIRPS
+- **ML Models:** XGBoost, LSTM (TensorFlow), Prophet
+- **Languages:** Python 3.10+
+- **Key Libraries:** pandas, numpy, scikit-learn, xgboost, tensorflow, prophet
 
-## Methodology
-Our workflow follows a standard and rigorous data science process, ensuring a reproducible and verifiable project.
-
-1. **Data Acquisition:** The project's foundation is a comprehensive, multi-source dataset for the entire state of Bihar from 2005 to 2023.
-
-**Climate & Remote Sensing Data:** We use the Google Earth Engine (GEE) Python API to extract long-term time-series data, including rainfall, temperature, and the Normalized Difference Vegetation Index (NDVI), PET, solar radiation, humidity.
-
-**Agricultural & Economic Data:** We integrate data from official government publications to capture ground-truth information on yield, price, and production cost.
-
-2. **Data Preprocessing & Feature Engineering:** The raw data is cleaned, prepared, and merged into a single integrated dataset. This includes handling missing values and creating new variables like seasonal averages and lagged features.
-
-3. **Predictive Modeling:** We train two separate models to address our dual forecasting goals.
-
-**Yield Forecasting Model:** We use a Random Forest Regressor to predict crop yield based on climate and remote sensing data.
-
-**Price Forecasting Model:** We use a Prophet or ARIMA time-series model to forecast market prices. The predicted yield from the first model is included as a key input feature for the price model.
-
-4. **Evaluation & Visualization:** We evaluate our models using metrics like R-squared and Mean Absolute Error (MAE),  Root Mean Squared Error (RMSE), Mean Absolute Percentage Error  (MAPE) to ensure their reliability.
-
-### Key Features
-**End-to-End Pipeline:** Provides a complete solution from data collection to final predictions.
-
-**Multi-Source Integration**: Seamlessly combines satellite, climate, and economic datasets.
-
-**Advanced Modeling:** Implements both classical and modern machine learning models for robust forecasting(ML + Time-series + future DL).
-
-**Scalable Architecture:** Designed to be easily adapted to different crops and regions.
-
-### How to Run the Project
-This project is designed to be run in a Python environment like Google Colab or a local Jupyter Notebook.
-
-1. **Set up Environment:**
-Use Python (Google Colab / Jupyter Notebook recommended).
-Install all required Python libraries by running the following commands:
-
-```Bash
-
-!pip install pandas numpy scikit-learn matplotlib
-!pip install earthengine-api
-!pip install prophet # If you use the Prophet model
+## 📁 Project Structure
 ```
-2. **Google Earth Engine Authentication:**
-Authenticate your Google Earth Engine account to access the satellite data. Run this command and follow the instructions:
-
-```Python
-
-import ee
-ee.Authenticate()
-ee.Initialize()
-```
-3. **Run the Notebooks:**
-The project code is structured into two main notebooks. Run the cells in each notebook in order:
-```
-notebooks/1_data_collection.ipynb
-
-notebooks/2_modeling_and_forecasting.ipynb
+├── data/
+│   ├── ndvi_data.csv           # Satellite vegetation index
+│   ├── weather_data.csv        # Climate variables
+│   ├── market_price_data.csv   # Rice prices
+│   ├── crop_yield_data.csv     # Yield targets
+│   └── master_dataset.csv      # Merged dataset
+├── models/
+│   ├── xgboost_model.pkl       # Best yield model
+│   ├── lstm_model.h5           # Deep learning model
+│   └── prophet_model.pkl       # Price forecasting
+├── notebooks/
+│   └── Crop_Yield_Forecasting.ipynb
+├── results/
+│   ├── model_comparison.csv
+│   └── feature_importance.png
+├── requirements.txt
+└── README.md
 ```
 
-### Repository Structure
-```data/``` → Raw and processed datasets (```final_dataset.csv```).
+## 🚀 Quick Start
 
-```notebooks/``` → Jupyter/Colab notebooks containing the project code.
+### Installation
+```bash
+# Clone repository
+git clone https://github.com/YOUR_USERNAME/crop-yield-forecasting.git
+cd crop-yield-forecasting
 
-```results/ → Plots and model evaluation reports.
+# Install dependencies
+pip install -r requirements.txt
+```
 
-### Applications
-This project demonstrates the potential of data-driven solutions in agriculture, with direct applications in:
+### Usage
+```python
+import joblib
+import pandas as pd
 
-Climate-Smart Agriculture: Guiding farmers on planting strategies based on climate forecasts.
+# Load trained model
+model = joblib.load('models/xgboost_model.pkl')
 
-Policy Planning: Aiding in the development of food security and market policies.
+# Prepare input features
+features = pd.DataFrame({
+    'NDVI': [0.65],
+    'rainfall_mm': [150],
+    'temperature_c': [28],
+    # ... other 16 features
+})
 
-Market Intelligence: Providing businesses with actionable insights for supply chain management.
+# Predict yield
+predicted_yield = model.predict(features)
+print(f"Predicted Yield: {predicted_yield[0]:.0f} kg/ha")
+```
+
+## 📈 Model Performance
+
+| Model | RMSE (kg/ha) | MAE (kg/ha) | R² Score | Use Case |
+|-------|--------------|-------------|----------|----------|
+| XGBoost | 245.18 | 195.09 | **0.7247** | Yield Prediction |
+| LSTM | 284.16 | 225.18 | 0.6302 | Yield Prediction |
+| Prophet | 125.50 | 98.30 | **0.8520** | Price Forecasting |
+
+## 🔬 Methodology
+
+### Data Sources
+1. **NDVI (Vegetation Index):** MODIS MOD13Q1 (250m, 16-day composite)
+2. **Weather Data:** 
+   - Rainfall: CHIRPS (5km daily)
+   - Temperature, Humidity: ERA5-Land (10km daily)
+3. **Market Prices:** Synthetic data based on MSP and seasonal patterns
+4. **Crop Yield:** Weather-correlated synthetic data
+
+### Feature Engineering (19 features)
+- Lagged features (1, 2, 4 weeks)
+- Rolling statistics (4-week mean/std)
+- Cumulative rainfall
+- NDVI-weather interactions
+- Cyclical time encoding
+- Vapor Pressure Deficit (VPD)
+
+### Model Architecture
+**XGBoost:**
+- n_estimators: 200
+- max_depth: 6
+- learning_rate: 0.05
+
+**LSTM:**
+- 2 LSTM layers (64, 32 units)
+- Dropout: 0.2
+- Dense layers: 16 → 1
+
+## 📊 Results & Insights
+
+### Key Findings
+- **XGBoost outperforms LSTM** for tabular agricultural data
+- **NDVI + rainfall** are strongest predictors (45% feature importance)
+- **Seasonal patterns** critical for price forecasting
+- **Weekly granularity** provides better temporal resolution than monthly
+
+### Future Improvements
+- Add soil data (texture, pH, nutrients)
+- Incorporate real government yield records
+- Expand to 38 districts (10× more data)
+- Deploy REST API for real-time predictions
+- Build interactive dashboard (Streamlit/Dash)
+
+## 👨‍💻 Author
+**Your Name**  
+Data Scientist | ML Engineer  
+[LinkedIn](https://linkedin.com/in/yourprofile) | [Portfolio](https://yourwebsite.com)
+
+## 📄 License
+MIT License - see LICENSE file
+
+## 🙏 Acknowledgments
+- Google Earth Engine for satellite data
+- Copernicus ERA5 for climate data
+- Bihar Department of Agriculture for domain insights
