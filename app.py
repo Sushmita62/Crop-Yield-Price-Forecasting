@@ -263,18 +263,8 @@ st.markdown("""
 """, unsafe_allow_html=True)
 ```
 
----
 
-## 🎯 FINAL STEPS
-
-1. **Update `requirements.txt`** on GitHub (minimal version above)
-2. **Update `app.py`** on GitHub (simplified version above)
-3. **Wait 2-3 minutes** for Streamlit to rebuild
-4. **App will work!** ✅
-
----
-
-## 📱 YOUR LIVE APP URL
+## 📱LIVE APP URL
 
 Once deployed successfully:
 ```
