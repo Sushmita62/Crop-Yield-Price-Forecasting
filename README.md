@@ -1,7 +1,12 @@
 # 🌾 Agricultural Yield & Price Forecasting System
 
+[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
+[![XGBoost](https://img.shields.io/badge/XGBoost-R²%200.72-success.svg)](https://xgboost.ai/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 ## 📊 Project Overview
 End-to-end ML pipeline for crop yield prediction and market price forecasting using satellite imagery, climate data, and machine learning.
+This repository demonstrates the **complete ML workflow**: data preparation, feature engineering, model training, evaluation, and inference-ready deployment code.
 
 ### **Key Results:**
 - **XGBoost R²: 0.72** (Yield Prediction)
@@ -123,14 +128,19 @@ print(f"Predicted Yield: {predicted_yield[0]:.0f} kg/ha")
 - Build interactive dashboard (Streamlit/Dash)
 
 ## 👨‍💻 Author
-**Your Name**  
-Data Scientist | ML Engineer  
-[LinkedIn](https://linkedin.com/in/yourprofile) | [Portfolio](https://yourwebsite.com)
+**Sushmita Raj**  
+M.Tech Student, Indian Institute of Technology Kharagpur (2024–2026)
 
+🔗 GitHub: https://github.com/Sushmita62  
+🔗 LinkedIn: https://linkedin.com/in/sushmita-raj  
+
+---
 ## 📄 License
-MIT License - see LICENSE file
+This project is licensed under the **MIT License**.
 
+---
 ## 🙏 Acknowledgments
 - Google Earth Engine for satellite data
 - Copernicus ERA5 for climate data
+- CHIRPS Rainfall Dataset
 - Bihar Department of Agriculture for domain insights
