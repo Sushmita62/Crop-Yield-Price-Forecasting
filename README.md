@@ -47,8 +47,8 @@ This repository demonstrates the **complete ML workflow**: data preparation, fea
 ### Installation
 ```bash
 # Clone repository
-git clone https://github.com/YOUR_USERNAME/crop-yield-forecasting.git
-cd crop-yield-forecasting
+git clone https://github.com/Sushmita62/Crop-Yield-Price-Forecasting.git
+cd Crop-Yield-Price-Forecasting
 
 # Install dependencies
 pip install -r requirements.txt
